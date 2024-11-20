@@ -1,0 +1,15 @@
+# prepare a standard .gitignore file for the project
+
+# Ignore all files that start with a dot
+
+.env*
+
+# Ignore all files that end with a tilde
+
+*~
+
+# Ignore the __pycache__ directory
+
+__pycache__/
+
+
