@@ -57,7 +57,7 @@ jobs:
             id SERIAL PRIMARY KEY,
             stock_symbol VARCHAR(10),
             date DATE,
-            close_price DECIMAL
+            close_price DECIMAL,
             volume NUMERIC
           );"
         env:
