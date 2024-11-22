@@ -18,12 +18,12 @@ jobs:
           POSTGRES_PASSWORD: Lorenzo_22
           POSTGRES_DB: Personal_Shares
         ports:
-          -  "5432:5432"
+          - "5432:5432"
         options: >-
           --health-cmd "pg_isready -U postgres" 
           --health-interval=10s
-          --health-timeout 5s
-          --health-retries 5 
+          --health-timeout=5s
+          --health-retries=5 
     
     env:
       DATABASE_HOST: localhost
@@ -31,7 +31,6 @@ jobs:
       DATABASE_USER: postgres
       DATABASE_PASSWORD: Lorenzo_22
       DATABASE_PORT: 5432
-
 
     steps:
       - uses: actions/checkout@v3
@@ -45,12 +44,29 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: Wait for PostgreSQL
         run: |
-          until pg_isready -h localhost -p 5432 -U postgres; do
-            echo "Waiting for PostgreSQL to be available..."
-            sleep 2
+          until pg_isready -h localhost -p ${{ env.DATABASE_PORT }}; do
+            sleep 1
           done
+
+      - name: Setup Database
+        run: |
+          psql -h localhost -U postgres -d Personal_Shares -c "CREATE TABLE IF NOT EXISTS stock_prices_actions (
+            id SERIAL PRIMARY KEY,
+            stock_symbol VARCHAR(10),
+            date DATE,
+            price DECIMAL
+          );"
+        env:
+          PGPASSWORD: ${{ env.DATABASE_PASSWORD }}
 
       - name: Run fetchdatatosql.py
         run: python fetchdatatosql.py
+        env:
+          DATABASE_HOST: ${{ env.DATABASE_HOST }}
+          DATABASE_NAME: ${{ env.DATABASE_NAME }}
+          DATABASE_USER: ${{ env.DATABASE_USER }}
+          DATABASE_PASSWORD: ${{ env.DATABASE_PASSWORD }}
+          DATABASE_PORT: ${{ env.DATABASE_PORT }}
