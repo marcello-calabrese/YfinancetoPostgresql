@@ -25,7 +25,7 @@ def fetch_data_to_postgresql():
         for date, row in hist.iterrows():
             cursor.execute(
                 """
-                INSERT INTO stock_prices (stock_symbol, date, close_price, volume)
+                INSERT INTO stock_prices_actions (stock_symbol, date, close_price, volume)
                 VALUES (%s, %s, %s, %s)
                 ON CONFLICT (stock_symbol, date) DO UPDATE
                 SET close_price = EXCLUDED.close_price,
