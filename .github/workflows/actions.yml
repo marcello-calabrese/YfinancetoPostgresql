@@ -14,23 +14,23 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: Lorenzo_22
+          POSTGRES_DB: Personal_Shares
         ports:
           -  "5432:5432"
         options: >-
-          --health-cmd "pg_isready -U ${{ secrets.DATABASE_USER }}" 
+          --health-cmd "pg_isready -U posgres" 
           --health-interval=10s
           --health-timeout 5s
           --health-retries 5 
     
     env:
       DATABASE_HOST: localhost
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_NAME: Personal_Shares
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: Lorenzo_22
+      DATABASE_PORT: 5432
 
 
     steps:
@@ -47,7 +47,7 @@ jobs:
           pip install -r requirements.txt
       - name: Wait for PostgreSQL
         run: |
-          until pg_isready -h localhost -p 5432 -U ${{ secrets.DATABASE_USER }}; do
+          until pg_isready -h localhost -p 5432 -U postgres; do
             echo "Waiting for PostgreSQL to be available..."
             sleep 2
           done
