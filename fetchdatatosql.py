@@ -27,7 +27,7 @@ def fetch_data_to_postgresql():
                 """
                 INSERT INTO stock_prices_actions (stock_symbol, date, close_price, volume)
                 VALUES (%s, %s, %s, %s)
-                ON CONFLICT (stock_symbol, date) DO UPDATE
+                ON CONFLICT ON CONSTRAINT stock_prices_actions_pkey DO UPDATE
                 SET close_price = EXCLUDED.close_price,
                     volume = EXCLUDED.volume;
                 """,

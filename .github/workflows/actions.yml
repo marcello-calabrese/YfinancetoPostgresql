@@ -58,7 +58,8 @@ jobs:
             stock_symbol VARCHAR(10),
             date DATE,
             close_price DECIMAL,
-            volume NUMERIC
+            volume NUMERIC,
+            UNIQUE (stock_symbol, date)
           );"
         env:
           PGPASSWORD: ${{ env.DATABASE_PASSWORD }}
