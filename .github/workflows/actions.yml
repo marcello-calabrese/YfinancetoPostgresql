@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DATABASE_HOST: 86.158.231.191
+      DATABASE_HOST: XXX
       DATABASE_NAME: Personal_Shares
       DATABASE_USER: postgres
       DATABASE_PASSWORD: Lorenzo_22
